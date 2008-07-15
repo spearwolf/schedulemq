@@ -1,0 +1,47 @@
+#!/usr/bin/env ruby
+
+rails_root = File.expand_path(File.join(File.dirname(__FILE__), ".."))
+
+require rails_root + '/config/boot.rb'
+require rails_root + '/config/environment'
+require 'schedulemq'
+
+config = ScheduleMQ::Config.new
+PID_FILE = config.pid_file || File.join(RAILS_ROOT, 'tmp', 'pids', "scheduledrb_#{RAILS_ENV}.pid")
+
+case ARGV[0]
+when 'start'
+  if fork
+    exit
+  else
+    if File.exists? PID_FILE
+      STDERR.puts "Ooops... found an existing pid-file[#{PID_FILE}]: maybe another schedulerb instance is active?"
+      exit 1
+    end
+
+    File.open(PID_FILE, 'w') { |pf| pf.write Process.pid().to_s }
+
+    ScheduleMQ::MasterScheduler.start_service(config)
+  end
+
+when 'stop'
+  pid = nil
+  File.open(PID_FILE, "r") { |pid_handle| pid = pid_handle.gets.strip.chomp.to_i }
+  begin
+    pgid =  Process.getpgid(pid)
+    Process.kill('TERM', pid)
+    Process.kill('-TERM', pgid)
+    Process.kill('KILL', pid)
+  rescue Errno::ESRCH => e
+    puts "Deleting pid file[PID_FILE]"
+  rescue
+    puts $!
+  ensure
+    File.delete(PID_FILE) if File.exists?(PID_FILE)
+  end
+
+else # script is started without a start|stop command
+  config.logger = Logger.new(STDOUT)
+  ScheduleMQ::MasterScheduler.start_service(config)
+end
+

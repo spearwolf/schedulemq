@@ -1,0 +1,32 @@
+<h1>Editing scheduled_message</h1>
+
+<%= error_messages_for :scheduled_message %>
+
+<% form_for(@scheduled_message) do |f| %>
+  <p>
+    <b>Destination queue</b><br />
+    <%= f.text_field :destination_queue %>
+  </p>
+
+  <p>
+    <b>Schedule method</b><br />
+    <%= f.select :schedule_method, ScheduledMessage::SCHEDULE_METHODS %>
+  </p>
+
+  <p>
+    <b>Schedule value</b><br />
+    <%= f.text_field :schedule_value %>
+  </p>
+
+  <p>
+    <b>Message</b><br />
+    <%= f.text_area :message %>
+  </p>
+
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @scheduled_message %> |
+<%= link_to 'Back', scheduled_messages_path %>

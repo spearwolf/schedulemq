@@ -1,0 +1,19 @@
+# ScheduleMQ configuration
+#
+development:
+    host: localhost
+    port: 7008
+    stomp_server: 10.7.0.1
+    #stomp_user:
+    #stomp_pass:
+    #log_file: <%= "#{RAILS_ROOT}/log/scheduledrb_development.log" %>
+    #pid_file: <%= "#{RAILS_ROOT}/tmp/pids/scheduledrb_development.pid" %>
+
+production:
+    host: 127.0.0.1
+    port: 7008
+    stomp_server: 10.7.0.1
+    #stomp_user:
+    #stomp_pass:
+    #log_file: <%= "#{RAILS_ROOT}/log/scheduledrb_production.log" %>
+    #pid_file: <%= "#{RAILS_ROOT}/tmp/pids/scheduledrb_production.pid" %>

@@ -1,0 +1,2 @@
+module ScheduledMessagesHelper
+end

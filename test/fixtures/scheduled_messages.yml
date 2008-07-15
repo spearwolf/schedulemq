@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  destination_queue: MyString
+  schedule_method: MyString
+  schedule_value: MyString
+  paused: false
+  message: MyText
+
+two:
+  destination_queue: MyString
+  schedule_method: MyString
+  schedule_value: MyString
+  paused: false
+  message: MyText

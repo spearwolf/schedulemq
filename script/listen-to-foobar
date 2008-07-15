@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+require 'pp'
+
+require 'rubygems'
+require 'stomp'
+
+client = Stomp::Client.new("", "", "10.7.0.1")
+
+client.subscribe "/queue/FOO.BAR" do |msg|
+  #pp msg
+  puts "[#{Time.now}] #{msg.body}"
+end
+
+client.join

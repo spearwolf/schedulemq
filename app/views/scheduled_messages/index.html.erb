@@ -1,0 +1,28 @@
+<h1>Listing scheduled_messages</h1>
+
+<table>
+  <tr>
+    <th>destination_queue</th>
+    <th>schedule_method</th>
+    <th>schedule_value</th>
+    <th>job_id</th>
+    <th>message</th>
+  </tr>
+
+<% for scheduled_message in @scheduled_messages %>
+  <tr>
+    <td><%=h scheduled_message.destination_queue %></td>
+    <td><%=h scheduled_message.schedule_method %></td>
+    <td><%=h scheduled_message.schedule_value %></td>
+    <td><%=h scheduled_message.job_id %></td>
+    <td><%=h scheduled_message.message %></td>
+    <td><%= link_to 'Show', scheduled_message %></td>
+    <td><%= link_to 'Edit', edit_scheduled_message_path(scheduled_message) %></td>
+    <td><%= link_to 'Destroy', scheduled_message, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New scheduled_message', new_scheduled_message_path %>

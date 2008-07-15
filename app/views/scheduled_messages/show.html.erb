@@ -1,0 +1,28 @@
+<p>
+  <b>destination_queue:</b>
+  <%=h @scheduled_message.destination_queue %>
+</p>
+
+<p>
+  <b>schedule_method:</b>
+  <%=h @scheduled_message.schedule_method %>
+</p>
+
+<p>
+  <b>schedule_value:</b>
+  <%=h @scheduled_message.schedule_value %>
+</p>
+
+<p>
+  <b>job_id:</b>
+  <%=h @scheduled_message.job_id %>
+</p>
+
+<p>
+  <b>message:</b>
+  <%=h @scheduled_message.message %>
+</p>
+
+
+<%= link_to 'Edit', edit_scheduled_message_path(@scheduled_message) %> |
+<%= link_to 'Back', scheduled_messages_path %>

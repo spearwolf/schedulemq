@@ -1,0 +1,9 @@
+== ScheduleMQ
+
+An event scheduler based on rails and stomp.
+
+
+== Author
+
+wolfger@spearwolf.de
+

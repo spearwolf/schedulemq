@@ -1,0 +1,27 @@
+# ScheduleMQ
+
+## TODO
+
+
+### 2008-02-19, spw
+
+- _done_ use ruby/rails Logger class
+
+- _done_ SchedulerServer.start_serice --> log__path STDOUT
+
+- _done_ rename SchedulerServer --> ScheduleServer or MasterScheduler
+
+- _done_ rewrite Config
+
+- _done_ load at startup all scheduled jobs from database and start them
+
+
+### 2008-02-20, spw
+
+- create a beautiful html interface
+    - welcome page
+    - documentation page
+    - scheduled_messages admin page
+
+- refine the xml/json interface
+
