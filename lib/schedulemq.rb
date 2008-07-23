@@ -1,7 +1,7 @@
-require 'drb'
-require 'stomp'
-require 'rufus/scheduler'
-require 'fastthread'
+# require 'drb'
+# require 'stomp'
+# require 'rufus/scheduler'
+# require 'fastthread'
 
 module ScheduleMQ
 
@@ -60,6 +60,10 @@ module ScheduleMQ
       logger.error "problem while unscheduling job_id[#{job_id}]: #{e}"
     end
 
+    def alive?
+      true
+    end
+
     private # -----------------------------------------------------------------
 
     def initialize config
@@ -105,22 +109,28 @@ module ScheduleMQ
 
     def start_message_distributor
       Thread.new {
-        begin
-          logger.debug 'message distributor started'
-          client = create_stomp_client
-          loop do
+        logger.debug 'message distributor started'
+        client = create_stomp_client
+        loop do
+          begin
             m = @message_queue.deq
             logger.debug "send message[\"#{m[:body]}\"] -> '#{m[:queue]}'"
             client.send(m[:queue], m[:body])
+
+          rescue Exception => e
+            logger.error "could not send message '#{m[:body]}' to queue '#{m[:queue]}':"
+            logger.error e
           end
-        rescue Exception => e
-          logger.error "message distributor unexpected problem: #{e}"
         end
       }
     end
 
     def create_stomp_client
       Stomp::Client.new(config.stomp_user, config.stomp_pass, config.stomp_server)
+
+    rescue Exception => e
+      logger.error "message distributor died unexpected: #{e}"
+      exit 1
     end
 
   end # MasterScheduler -------------------------------------------------------

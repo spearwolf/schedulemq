@@ -29,9 +29,18 @@ class ScheduledMessage < ActiveRecord::Base
     logger.warn "Couldn't unschedule ScheduledMessage[#{id}]: #{e}"
   end
 
-  def schedule_server
-    $scheduleMQConfig ||= ScheduleMQ::Config.new
-    DRbObject.new(nil, "druby://#{$scheduleMQConfig.host}:#{$scheduleMQConfig.port}")
-  end
+  class << self
 
+    def schedule_server
+      $scheduleMQConfig ||= ScheduleMQ::Config.new
+      DRbObject.new(nil, "druby://#{$scheduleMQConfig.host}:#{$scheduleMQConfig.port}")
+    end
+
+    def schedule_server_alive?
+      schedule_server.alive?
+    rescue Exception => e
+      logger.error(e)
+      false
+    end
+  end
 end
